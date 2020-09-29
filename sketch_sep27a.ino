@@ -28,6 +28,9 @@ void setup() {
     display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
     Serial.begin(9600);
     dht.begin();
+
+    pinMode(8, OUTPUT);
+    digitalWrite(8, LOW);
     
     Serial.println("initialized");
   }
@@ -49,6 +52,12 @@ void loop() {
   if (isnan(h) || isnan(t)) {
     Serial.println("Failed to read from DHT sensor!");
     return;
+  }
+
+  if (h > 70) {
+    digitalWrite(8, HIGH);
+  } else {
+    digitalWrite(8, LOW);
   }
 
   display.clearDisplay();
